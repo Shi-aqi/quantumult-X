@@ -6,6 +6,7 @@
 var $nobyda = nobyda()
 
 $nobyda.notify("成功！")
+return;
 
 function nobyda() {
     const isRequest = typeof $request != "undefined"
