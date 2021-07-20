@@ -3,6 +3,8 @@
 获取cookie地址：""https://h4.102727.com/?openId=osZYi6ChfrvbXNGPSd5xBFSnSyGM&t=5935&code=001jUA000pf45M1oBq000zFD3c4jUA0A&state=STATE"
  */
 
+var $nobyda = nobyda()
+
 $nobyda.notify("成功！")
 
 function nobyda() {
