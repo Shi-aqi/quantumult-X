@@ -2,11 +2,52 @@
 金银手指，小羊毛
 获取cookie地址：""https://h4.102727.com/?openId=osZYi6ChfrvbXNGPSd5xBFSnSyGM&t=5935&code=001jUA000pf45M1oBq000zFD3c4jUA0A&state=STATE"
  */
-
 var $nobyda = nobyda()
 
-$nobyda.notify("成功！")
-return;
+if ($nobyda.isRequest) {
+    GetCookie()
+}
+
+
+
+
+
+function GetCookie() {
+    var CookieName = "B站漫画";
+    var CookieKey = "CookieBM";
+    var regex = /UM_distinctid=.+?;/;
+    if ($request.headers) {
+        var header = $request.headers['Cookie'] ? $request.headers['Cookie'] : "";
+        if (header.indexOf("UM_distinctid=") != -1) {
+            var CookieValue = regex.exec(header)[0];
+            if ($nobyda.read(CookieKey)) {
+                if ($nobyda.read(CookieKey) != CookieValue) {
+                    var cookie = $nobyda.write(CookieValue, CookieKey);
+                    if (!cookie) {
+                        $nobyda.notify("更新" + CookieName + "Cookie失败‼️", "", "");
+                    } else {
+                        $nobyda.notify("更新" + CookieName + "Cookie成功 🎉", "", "");
+                    }
+                }
+            } else {
+                var cookie = $nobyda.write(CookieValue, CookieKey);
+                if (!cookie) {
+                    $nobyda.notify("首次写入" + CookieName + "Cookie失败‼️", "", "");
+                } else {
+                    $nobyda.notify("首次写入" + CookieName + "Cookie成功 🎉", "", "");
+                }
+            }
+        } else {
+            $nobyda.notify("写入" + CookieName + "Cookie失败‼️", "", "Cookie关键值缺失");
+        }
+    } else {
+        $nobyda.notify("写入" + CookieName + "Cookie失败‼️", "", "配置错误, 无法读取请求头,");
+    }
+    $nobyda.end()
+}
+
+
+
 
 function nobyda() {
     const isRequest = typeof $request != "undefined"
